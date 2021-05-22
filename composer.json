@@ -1,0 +1,27 @@
+{
+    "name": "huynl/press",
+    "description": "An elegent markdown for training purpose",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "HuyNguyen206",
+            "email": "nguyenlehuyuit@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^6.17"
+    },
+    "autoload": {
+        "psr-4": {
+            "Src\\" : "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\" : "tests/"
+        }
+    },
+    "require": {
+        "erusev/parsedown": "^1.7"
+    }
+}
