@@ -4,8 +4,8 @@
 namespace Tests\Feature;
 
 
-use Orchestra\Testbench\TestCase;
 use Src\MarkdownParser;
+use Tests\TestCase;
 
 class ParseTest extends TestCase
 {
