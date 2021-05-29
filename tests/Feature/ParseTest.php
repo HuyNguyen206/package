@@ -4,7 +4,7 @@
 namespace Tests\Feature;
 
 
-use Src\MarkdownParser;
+use huynl\Press\MarkdownParser;
 use Tests\TestCase;
 
 class ParseTest extends TestCase

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Src\Fields;
+namespace huynl\Press\Fields;
 
 
 abstract class FileContract

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Src;
+namespace huynl\Press;
 
 
 class MarkdownParser

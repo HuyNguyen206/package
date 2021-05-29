@@ -1,11 +1,12 @@
 <?php
 
 
-namespace Src;
+namespace huynl\Press;
 
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PressFileParser
@@ -36,9 +37,9 @@ class PressFileParser
 
     protected function processData(){
         foreach ($this->data as $field => $value){
-            $class = '\\Src\\Fields\\'. Str::ucfirst($field);
+            $class = '\\huynl\\Press\\Fields\\'. Str::ucfirst($field);
             if(!class_exists($class) && !method_exists($class, 'parse')){
-                $class = '\\Src\\Fields\\Extra';
+                $class = '\\huynl\\Press\\Fields\\Extra';
                 $extra = $class::parse($field, $value)['extra'];
                 if(isset($this->data['extra'])){
                     $this->data['extra'] = array_merge($this->data['extra'], $extra);
@@ -68,7 +69,7 @@ class PressFileParser
     private function splitFile()
     {
         preg_match('/^\-{3}(.*?)\-{3}(.*)/s',
-            File::exists($this->fileName) ? File::get($this->fileName) : $this->fileName,
+            Storage::exists($this->fileName) ? Storage::get($this->fileName) : $this->fileName,
             $this->rawData
         );
     }

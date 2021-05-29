@@ -5,8 +5,8 @@ namespace Tests\Feature;
 
 
 use Carbon\Carbon;
-use Src\MarkdownParser;
-use Src\PressFileParser;
+use huynl\Press\MarkdownParser;
+use huynl\Press\PressFileParser;
 use Tests\TestCase;
 
 class PressFileParseTest extends TestCase

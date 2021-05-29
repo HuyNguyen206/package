@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Src\Fields;
+namespace huynl\Press\Fields;
 
 
-use Src\MarkdownParser;
+use huynl\Press\MarkdownParser;
 
 class Description extends FileContract
 {
