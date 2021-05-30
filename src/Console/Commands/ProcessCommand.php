@@ -4,12 +4,10 @@
 namespace huynl\Press\Console\Commands;
 
 
+use huynl\Press\Facades\Press;
 use huynl\Press\Post;
-use huynl\Press\Press;
-use huynl\Press\PressFileParser;
+
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProcessCommand extends Command
@@ -22,17 +20,22 @@ class ProcessCommand extends Command
          return  $this->warn('Please publish the config file by running'.
              ' \'php artisan vendor:publish --tag=press-config\'');
         }
-        $posts = Press::driver()->fetchPosts();
+        try {
+            $posts = Press::driver()->fetchPosts();
 
-       foreach ($posts as $post){
-           Post::create([
-               'identifier' => Str::random(),
-               'slug' => Str::slug($post['title']),
-               'title' => $post['title'],
-               'body' => $post['body'],
-               'extra' => $post['extra'] ?? null
-           ]);
-       }
+            foreach ($posts as $post){
+                Post::create([
+                    'identifier' => $post['identifier'],
+                    'slug' => Str::slug($post['title']),
+                    'title' => $post['title'],
+                    'body' => $post['body'],
+                    'extra' => $post['extra'] ?? null
+                ]);
+            }
+        }catch (\Throwable $ex){
+            $this->error($ex->getMessage());
+        }
+
 
     }
 
