@@ -5,6 +5,11 @@ namespace huynl\Press;
 
 
 use huynl\Press\Console\Commands\ProcessCommand;
+use huynl\Press\Fields\Body;
+use huynl\Press\Fields\Date;
+use huynl\Press\Fields\Description;
+use huynl\Press\Fields\Extra;
+use huynl\Press\Fields\Title;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use huynl\Press\Facades\Press;
@@ -34,6 +39,7 @@ class PressBaseServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'press');
         $this->registerFacade();
         $this->registerRoutes();
+        $this->registerFields();
     }
 
     protected function registerPublishing()
@@ -41,6 +47,10 @@ class PressBaseServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/press.php' => config_path('press.php')
         ], 'press-config');
+
+        $this->publishes([
+            __DIR__ . '/../src/Console/stubs/PressServiceProvider.stub' => app_path('Providers/PressServiceProvider.php')
+        ], 'press-provider');
     }
 
     protected function registerRoutes()
@@ -62,6 +72,17 @@ class PressBaseServiceProvider extends ServiceProvider
         $this->app->singleton('Press', function($app){
             return new \huynl\Press\Press();
         });
+    }
+
+    private function registerFields()
+    {
+        Press::fields([
+            Body::class,
+            Date::class,
+            Description::class,
+            Extra::class,
+            Title::class
+            ]);
     }
 
 

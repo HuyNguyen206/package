@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 class Press
 {
+    protected $fields = [];
     public function configNotPublish(){
         return is_null(config('press'));
     }
@@ -20,6 +21,14 @@ class Press
 
     public function prefixPath(){
         return config('press.prefix_path', 'press');
+    }
+
+    public function fields($fields){
+        $this->fields = array_merge($this->fields, $fields);
+    }
+
+    public function availableFields(){
+        return array_reverse($this->fields);
     }
 
 }

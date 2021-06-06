@@ -22,12 +22,13 @@ class PressFileParser
         $this->fileName = $fileName;
         $this->splitFile();
         $this->explodeData();
+
         $this->processData();
     }
 
     protected function explodeData()
     {
-        $data = explode("\r\n", trim($this->rawData[1]));
+        $data = explode("\n", trim($this->rawData[1]));
         foreach ($data as $s){
             preg_match('/(.*):\s?(.*)/',$s,$result);
                 $this->data[$result[1]] = $result[2];
@@ -37,7 +38,7 @@ class PressFileParser
 
     protected function processData(){
         foreach ($this->data as $field => $value){
-            $class = '\\huynl\\Press\\Fields\\'. Str::ucfirst($field);
+            $class = $this->getField(Str::ucfirst($field));
             if(!class_exists($class) && !method_exists($class, 'parse')){
                 $class = '\\huynl\\Press\\Fields\\Extra';
                 $extra = $class::parse($field, $value)['extra'];
@@ -72,5 +73,16 @@ class PressFileParser
             Storage::exists($this->fileName) ? Storage::get($this->fileName) : $this->fileName,
             $this->rawData
         );
+    }
+
+    private function getField($field)
+    {
+        foreach (\huynl\Press\Facades\Press::availableFields() as $availableField){
+            $class = new \ReflectionClass($availableField);
+            if($class->getShortName() == $field){
+                return $class->getName();
+            }
+
+        }
     }
 }
